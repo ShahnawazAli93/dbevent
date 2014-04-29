@@ -165,6 +165,7 @@ io.sockets.on('connection',function(socket){
         db.querydb(query)
             .then(
             function(data){
+                    console.log("I was here");
                 var text = userName+" commented on "+eventName;
                 var query2 = "INSERT INTO notifications (senderId, nType, date, time,text,eventId) VALUES ('"
                     + userId        +"','"
@@ -172,8 +173,8 @@ io.sockets.on('connection',function(socket){
                     + date          +"','"
                     + time           +"','"
                     + text      +"','"
-                    + eventName      +"','"
                     + eventId          +"')";
+                console.log(query2);
                 db.querydb(query2)
                     .then(
                     function(data2){
@@ -196,19 +197,18 @@ io.sockets.on('connection',function(socket){
                                         }
 
                                     }
-
                                 }
                                 //io.sockets.emit('getComment',comment[0]);
                             },
 
                             function(error) {
-
+                                console.log("eventsInvitation",error);
                                 io.sockets.emit('getComment',"false");
                             });
                     },
 
                     function(error){
-                        console.log(error);
+                        console.log("notifications",error);
                         io.sockets.emit('getComment',"false");
                     });
                 //console.log(data);
@@ -216,7 +216,7 @@ io.sockets.on('connection',function(socket){
             },
 
             function(error){
-                console.log(error);
+                console.log("comments",error);
                 io.sockets.emit('getComment',"false");
             });
     });
@@ -234,7 +234,11 @@ io.sockets.on('connection',function(socket){
             .then(
             function(data){
                 console.log(data);
-                var text = body.userName+' wants to add you <a type="button" href="/acceptfriend/'+body.userId+'" class="btn btn-primary btn-xs">Accept</a>';
+                var text = body.userName+' wants to add you <button type="button" id="acceptFr'+body.userId+'"  class="btn btn-primary btn-xs">Accept</button>'
+                    +'<script> $("#acceptFr'+body.userId+'").click(function(){console.log("hello buddy");});</script>';
+
+                console.log(text);
+
                 var query2 = "INSERT INTO notifications (senderId, nType, date, time,text,title, receiverId) VALUES ('"
                     + body.userId        +"','"
                     + 2       +"','"

@@ -70,4 +70,6 @@ dbevent.controller('homeCtrl',function homeCtrl($scope, eventData, $rootScope, u
             timeout: 3500
         });
     })
+
+    $(".testmeout").click(function(){console.log("hello buddy");});
 })
