@@ -37,11 +37,11 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav" style="padding-left:30px;">
                 <li><img class="img-circle" ng-src="{{userData.imgUrl}}" height="50" width="50"></li>
-                <li class="active"><a href="#">{{userData.fullName}}</a></li>
+                <li class="active" style="padding-left: 5px"><a href="#">{{userData.fullName}}</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
 
-                <li id="noti"><a><span id="NotiPanel" class="badge"><span style="color: #ffffff; padding-right: 10px;" class="glyphicon glyphicon-bullhorn"></span>{{totalNotification}}</span></a></li>
+                <li id="noti"><a><span id="NotiPanel" class="badge"><span style="padding-right: 10px;" class="glyphicon glyphicon-bullhorn"></span>{{totalNotification}}</span></a></li>
                 <li>
                     <form class="navbar-form" role="form"method="get" action="/logout">
                         <button class="btn btn-danger" type="submit">Log out</button>
