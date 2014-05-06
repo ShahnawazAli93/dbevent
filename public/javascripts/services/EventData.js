@@ -1,9 +1,9 @@
 dbevent.factory('eventData',function($resource,$q,$http){
     var deffered = $q.defer();
     return {
-        getEvent: function(){
+        getInvitedEvents: function(){
             deffered = $q.defer();
-            $http.get('/getEvents')
+            $http.get('/getInvitedEvents')
                 .success(function(data){
                     console.log(data);
                     deffered.resolve(data);

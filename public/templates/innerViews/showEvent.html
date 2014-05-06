@@ -19,7 +19,7 @@
                             Location: {{eventToShow.location}}<br>{{eventToShow.date}}<br>{{eventToShow.time}}
                         </div>
                         <div class="col-md-4 text-right">
-                            <button class="btn btn-primary" type="button">Invite Friends</button>
+                            <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal">Invite Friends</button>
                         </div>
                     </div>
                 </div>
@@ -45,6 +45,28 @@
                     <button type="button" class="btn btn-info" ng-click="postComment(commentBody)">Comment</button>
                 </form>
             </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div ng-repeat="friend in friends">
+                                {{friend.userName}}
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

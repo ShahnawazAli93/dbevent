@@ -308,9 +308,9 @@ exports.saveEvent = function(req,res){
 
 }
 
-exports.getEvents = function(req,res){
+exports.getInvitedEvents = function(req,res){
     var post = req.body;
-    var query = "SELECT eventId,name,DATE_FORMAT(date,'%d %b %y') AS date,DATE_FORMAT(time, '%H:%i %p') AS time,location,userId,createdOn FROM events WHERE userId='"+req.session.user_id +"'";
+    var query = "SELECT eventId FROM eventsInvitation WHERE userId='"+req.session.user_id +"'";
     console.log(query+"From SaveEvent");
     db.querydb(query)
         .then(
@@ -356,10 +356,10 @@ exports.getFriendList = function(req,res){
             var friendArray = [];
             for(var i=0;i<data.length;i++){
                 if(data[i].userId==req.session.user_id){
-                    query = "SELECT userName, userId, imgUrl FROM users WHERE userId='"+data[i].friendId+"'";
+                    query = "SELECT userName, userId, imgUrl, email, DOB FROM users WHERE userId='"+data[i].friendId+"'";
                 }
                 else{
-                    query = "SELECT userName, userId, imgUrl FROM users WHERE userId='"+data[i].userId+"'";
+                    query = "SELECT userName, userId, imgUrl, email, DOB FROM users WHERE userId='"+data[i].userId+"'";
                 }
                 db.querydb(query)
                     .then(
@@ -389,7 +389,7 @@ exports.getFriendList = function(req,res){
 
 exports.getOtherUsers = function(req,res){
     var data = req.body;
-    var query = "SELECT userId, userName, imgUrl FROM users WHERE ";
+    var query = "SELECT userId, userName, imgUrl, email, DOB FROM users WHERE ";
     if(data.length > 0)
     {
         for(var i = 0; i<data.length;i++){

@@ -26,5 +26,8 @@ dbevent.config(function($routeProvider){
         }).when('/Settings',{
             templateUrl:'templates/Settings.html',
             controller:'SettingsCtrl'
+        }).when('/user/:pUId',{
+            templateUrl:'templates/publicProfile.html',
+            controller:'publicProfileCtrl'
         }).otherwise({redirectTo:'/'})
 })

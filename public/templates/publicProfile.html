@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            <ul class="nav nav-pills nav-stacked">
+                <li><a href="#/">Home</a></li>
+                <li><a href="#/Dashboard">Dashboard</a></li>
+                <li><a href="#/Events">Events</a></li>
+                <li><a href="#/Circle">Circle</a></li>
+                <li><a href="#/Levels">Levels</a></li>
+                <li><a href="#/Settings">Settings</a></li>
+            </ul>
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="thumbnail" style="background-color: lemonchiffon; border-color:#faebcc;">
+                                <div class="caption">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <h2>{{pUser.fullName}}</h2>
+                                            @ {{pUser.userName}}<br>
+                                            <span class="glyphicon glyphicon-envelope"></span> {{pUser.email}}<br>
+                                            <span class="glyphicon glyphicon-gift"></span> {{pUser.DOB}}
+                                        </div>
+                                        <div class="col-md-4">
+                                            <img class="img-circle" ng-src="{{pUser.imgUrl}}" height="200" width="200">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

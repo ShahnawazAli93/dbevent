@@ -1,18 +1,46 @@
-dbevent.controller('EventsCtrl',function EventsCtrl($scope, $rootScope, eventData,$modal,$log,$timeout){
+dbevent.controller('EventsCtrl',function EventsCtrl($scope, $rootScope, eventData, userData, topLevel, $modal,$log){
     $scope.message = "All events will display here..";
     $scope.event={};
     $scope.event["hour"]=1;
     $scope.event["minute"]=0;
     $scope.event["meridian"]=0;
-    $rootScope.allEvents = [];
+    $scope.myEvents = [];
+    $scope.myInvitedEvents = [];
+    $scope.myCreatedEvents = [];
     //event.time = parseInt(event.hour)+parseInt(event.meridian)+":"+event.minute+":"+"00";
-    eventData.getEvent()
-        .then(function(data){
-            console.log("All events from backend: ",data);
-            $rootScope.allEvents = data;
-        },function(err){
-            console.log("error while getting all events: ",err);
-        })
+
+    if($rootScope.allEvents==undefined){
+
+            topLevel.reloadAllDataAtOnce()
+                .then(function(data){
+                    for(var i=0;i<$rootScope.allEvents.length;i++){
+                        if($rootScope.allEvents[i].userId == $rootScope.userData.userId){
+                            $scope.myEvents.push($rootScope.allEvents[i]);
+                            $scope.myCreatedEvents.push($rootScope.allEvents[i]);
+                        }
+                    }
+                },function(err){
+                    console.log(err);
+                })
+    }
+    else{
+        console.log("from home page");
+        for(var i=0;i<$rootScope.allEvents.length;i++){
+            if($rootScope.allEvents[i].userId == $rootScope.userData.userId){
+                $scope.myEvents.push($rootScope.allEvents[i]);
+            }
+        }
+        /*
+        eventData.getInvitedEvents()
+            .then(function(data){
+
+
+                console.log("my invited events: ",$scope.myInvitedEvents);
+            },function(err){
+                console.log("error while getting all events: ",err);
+            })
+            */
+    }
 
     /*
     ---------------------------MODAL WORK--------------------------------------
@@ -111,10 +139,10 @@ var ModalInstanceCtrl = function ($scope, $rootScope, $modalInstance, items, fl,
             .then(function(res){
                 console.log("reply from back: ",res);
                 if(res=="true"){
-                    eventData.getEvent()
+                    eventData.getInvitedEvents()
                         .then(function(data){
                             console.log("All events from backend: ",data);
-                            $rootScope.allEvents = data;
+                            //$rootScope.allEvents.push(data;
                         },function(err){
                             console.log("error while getting all events: ",err);
                         });

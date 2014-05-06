@@ -1,24 +1,16 @@
-dbevent.controller('CircleCtrl',function CircleCtrl($scope,friendsData,socket,$rootScope){
+dbevent.controller('CircleCtrl',function CircleCtrl($scope,friendsData, topLevel, socket,$rootScope){
     $scope.message = "This is your circle zone";
 
-    $scope.friends = {};
     $scope.sortOrder="userName";
-    $scope.otherUsers = {};
 
-    friendsData.getFriendList()
-        .then(function(data){
-            console.log("data received from backend: "+data);
-            $scope.friends = data;
-            friendsData.getOtherUsers($scope.friends)
-                .then(function(data2){
-                    console.log("others friends received: ",data2);
-                    $scope.otherUsers = data2;
-                },function(err){
-                    console.log("error",err);
-                })
-        },function(data){
-            console.log("error: "+data);
-        })
+    if($rootScope.friends == undefined || $rootScope.otherUsers == undefined){
+        topLevel.reloadAllDataAtOnce()
+            .then(function(data){
+
+            },function(err){
+                console.log(err);
+            })
+    }
 
     $scope.addNewFriend = function(data){
         console.log(data);

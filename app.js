@@ -58,7 +58,7 @@ app.get('/logout',function (req, res) {
 
 app.post('/saveEvent',routes.saveEvent);
 
-app.get('/getEvents',routes.getEvents);
+app.get('/getInvitedEvents',routes.getInvitedEvents);
 
 app.get('/getAllUserEvents',routes.getAllUserEvents);
 
@@ -126,8 +126,6 @@ io.sockets.on('connection',function(socket){
 
     console.log('user on socket with id', socket.id);
 
-    socket.emit("getnoti",{title:"hello title",text:"hello text"});
-
     socket.on('login',function(userId){
         clients[userId] = socket.id;
         console.log(clients);
@@ -142,6 +140,7 @@ io.sockets.on('connection',function(socket){
             eventId = body.eventId,
             commentBody = body.commentBody,
             eventName = body.eventName,
+            userImgUrl = body.imgUrl,
             date = d.getFullYear()+"-"+d.getMonth()+"-"+ d.getDate(),
             time = d.getHours()+":"+ d.getMinutes()+":"+ d.getSeconds();
 
@@ -150,8 +149,8 @@ io.sockets.on('connection',function(socket){
             "body":body.commentBody,
             "fullName":body.fullName,
             "eventId":body.eventId,
-            "title":eventName
-
+            "title":eventName,
+            "imgUrl":userImgUrl
         }];
 
         var query = "INSERT INTO comments (userId, eventId, body, date, time) VALUES ('"
@@ -167,7 +166,7 @@ io.sockets.on('connection',function(socket){
             function(data){
                     console.log("I was here");
                 var text = userName+" commented on "+eventName;
-                var query2 = "INSERT INTO notifications (senderId, nType, date, time,text,eventId) VALUES ('"
+                var query2 = "INSERT INTO notifications (senderId, nType, date, time,text,title,eventId) VALUES ('"
                     + userId        +"','"
                     + 1       +"','"
                     + date          +"','"

@@ -1,4 +1,4 @@
-dbevent.factory('userData',function($q,$http){
+dbevent.factory('userData',function($q, $http){
     var deffered = $q.defer();
     return {
         getUserData: function(){
@@ -52,19 +52,5 @@ dbevent.factory('userData',function($q,$http){
                 });
             return deffered.promise;
         }
-        /*,
-        getAllNotifications:function(){
-            deffered = $q.defer();
-            $http.post('/getnoti',"")
-                .success(function(data){
-                    console.log(data);
-                    deffered.resolve(data);
-                })
-                .error(function(data,status,headers,config){
-                    console.log("error:",status);
-                    deffered.reject(data);
-                })
-            return deffered.promise;
-        }*/
     }
 })

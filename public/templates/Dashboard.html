@@ -11,7 +11,62 @@
             </ul>
         </div>
         <div class="col-md-9">
-            {{message}}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="thumbnail" style="background-color: lemonchiffon; border-color:#faebcc;">
+                                <div class="caption">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <h2>{{userData.fullName}}</h2>
+                                            @ {{userData.userName}}<br>
+                                            <span class="glyphicon glyphicon-envelope"></span> {{userData.email}}<br>
+                                            <span class="glyphicon glyphicon-gift"></span> {{userData.DOB}}
+                                        </div>
+                                        <div class="col-md-4">
+                                            <img class="img-circle" ng-src="{{userData.imgUrl}}" height="200" width="200">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="panel panel-success">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Events</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <input type="text" value="19" class="E-dial" data-linecap=round data-readOnly=true data-fgColor="#3c763d">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Friends</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <input type="text" value="19" class="F-dial" data-linecap=round data-readOnly=true data-fgColor="#31708f">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="panel panel-danger">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Level</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <input type="text" value="19" class="L-dial" data-linecap=round data-readOnly=true data-fgColor="#a94442">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
