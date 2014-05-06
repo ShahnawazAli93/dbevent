@@ -51,11 +51,28 @@ dbevent.controller('homeCtrl',function homeCtrl($scope, $rootScope, topLevel, so
             panelbutton: true,
             timeout: 3500
         },function (b) {
-
             console.log("You just got a live noti");
 
         });
+        if(data.title="Friend Request Accepted"){
+            topLevel.reloadAllDataAtOnce()
+                .then(function(res){
+                    console.log("data reloaded");
+                },function(err){
+                    console.log(err);
+                })
+        }
         window.stop();
+    })
+    socket.on('redirect',function(data){
+
+        window.location.href = data.url;
+        topLevel.reloadAllDataAtOnce()
+            .then(function(rep){
+                console.log("all data reloaded");
+            },function(err){
+                console.log(err);
+            })
     })
 
     $rootScope.rab = function(){

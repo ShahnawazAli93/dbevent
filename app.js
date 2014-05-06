@@ -85,7 +85,33 @@ app.post('/getnoti',routes.getnoti);
 app.get('/search', search.service);
 
 app.get('/afr/:id',function(req,res){
-    io.sockets.socket(clients[req.session.user_id]).emit('getnoti',{title:"Friend Request Accepted",text:"Awesome! You have one more friend"});
+     var senderId  = req.param('id');
+    console.log("senderId is ",senderId);
+
+    var query = "UPDATE friends SET areFriends='true' WHERE userId='"+senderId+"' AND friendId='"+req.session.user_id+"' AND areFriends='false'";
+
+    console.log(query);
+    db.querydb(query)
+        .then( function(res)   { console.log(res);
+            if(res.affectedRows == 1){
+
+                var query = "DELETE FROM notifications WHERE senderId='"+senderId+"' AND receiverId='"+req.session.user_id+"'";
+
+                console.log(query);
+                db.querydb(query)
+                    .then( function(res)   { console.log(res); },
+                    function(error) { console.log(error)});
+                io.sockets.socket(clients[req.session.user_id]).emit('redirect',{url:"#/user/"+senderId});
+                io.sockets.socket(clients[senderId]).emit('getnoti',{title:"Friend Request Accepted",text:"Awesome! "+req.session.userName+" Accepted Your Friend Request"});
+
+            }
+            else{
+                console.log("redirect without query");
+                io.sockets.socket(clients[req.session.user_id]).emit('redirect',{url:"#/user/"+senderId});
+            }
+        },
+        function(error) { console.log(error)});
+
 
 });
 
