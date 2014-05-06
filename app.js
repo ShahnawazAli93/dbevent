@@ -84,6 +84,11 @@ app.post('/getnoti',routes.getnoti);
 
 app.get('/search', search.service);
 
+app.get('/afr/:id',function(req,res){
+    io.sockets.socket(clients[req.session.user_id]).emit('getnoti',{title:"Friend Request Accepted",text:"Awesome! You have one more friend"});
+
+});
+
 app.get('/acceptfriend/:friendId',function(req,res){
     var friendId = req.params.friendId;
     var query = "UPDATE friends SET areFriends = 'true'  WHERE userId = '"+ friendId  + "' AND friendId = '"+ req.session.user_id +"'";
@@ -125,6 +130,8 @@ var clients ={};
 io.sockets.on('connection',function(socket){
 
     console.log('user on socket with id', socket.id);
+
+    
 
     socket.on('login',function(userId){
         clients[userId] = socket.id;
@@ -221,6 +228,7 @@ io.sockets.on('connection',function(socket){
     });
 
     socket.on('addNewFriend',function(body){
+        console.log("add new user Socket");
         var d = new Date();
         var date = d.getFullYear()+"-"+d.getMonth()+"-"+ d.getDate(),
             time = d.getHours()+":"+ d.getMinutes()+":"+ d.getSeconds();
@@ -233,8 +241,7 @@ io.sockets.on('connection',function(socket){
             .then(
             function(data){
                 console.log(data);
-                var text = body.userName+' wants to add you <button type="button" id="acceptFr'+body.userId+'"  class="btn btn-primary btn-xs">Accept</button>'
-                    +'<script> $("#acceptFr'+body.userId+'").click(function(){console.log("hello buddy");});</script>';
+                var text = 'Yay! '+body.userName+' wants to add you in his Circle <a type="button" class="btn btn-primary btn-xs" href="/afr/'+body.userId+'">Accept</a>';
 
                 console.log(text);
 

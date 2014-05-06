@@ -152,20 +152,30 @@ exports.login =  function (req, res) {
     var post = req.body;
     console.log(post);
     var query = "SELECT * FROM users WHERE userName='"+post.user+"'";
+    console.log(query);
     db.querydb(query)
         .then(
         function(data)   {
-            console.log(data[0]);
+            console.log("data from db",data[0]);
 
             if(data.length>0)
             {
+                console.log("i was here");
                 var isItHash = bcrypt.compareSync(post.password, data[0].password);// true)
-                console.log(isItHash);
+                console.log("hash",isItHash);
             }
 
 
-            if(typeof data !== 'undefined' && data.length > 0 && isItHash  && data[0].isActivated != 0)
+
+
+            if(typeof data !== 'undefined' && data.length > 0 && isItHash)
             {
+                if(data[0].isActivated == 0)
+                {
+                    console.log("active error");
+                    res.send("active error");
+                    console.log(error)
+                }
                 console.log("***********************");
                 console.log(data[0]);
                 req.session.user_id = data[0].userId;
@@ -177,13 +187,14 @@ exports.login =  function (req, res) {
             }
             else
             {
-                console.log("i am here");
-                res.send("false");
+                console.log("pass error");
+                res.send("pass error");
 
             }
         },
 
         function(error) {
+            console.log("db error");
             res.send("false");
             console.log(error)
 
@@ -197,13 +208,14 @@ exports.signup =  function (req, res) {
     console.log(user);
 
     var salt = bcrypt.genSaltSync(10);
-    var hash = bcrypt.hashSync(user.password, salt);
+    var hash = bcrypt.hashSync(user.pass, salt);
+    console.log(bcrypt.compareSync(user.pass,hash));
 
     //console.log("SELECT * FROM users WHERE userName = '"+ user.userName + "' OR email = '" + user.email+"'");
     db.querydb("SELECT * FROM users WHERE userName = '"+ user.userName + "' OR email = '" + user.email+"'")
         .then(
         function(data){
-            if(data.length == 0 && user.userName !== '' && user.password !== ''  && user.password == user.confirm_password && user.email !== '' && user.gender !== '' && user.firstname !== '' && user.userName.indexOf(' ') == -1 ){
+            if(data.length == 0 && user.userName !== '' && user.pass !== ''  && user.pass == user.rePass && user.email !== '' && user.gender !== '' && user.fName !== '' && user.userName.indexOf(' ') == -1 ){
 
                 var imageUrl = "https://s3-ap-southeast-1.amazonaws.com/elasticbeanstalk-ap-southeast-1-314976083393/Images/";
                 if(user.gender == 'M')
@@ -599,6 +611,8 @@ exports.getnoti = function(req,res){
         }
     )
 }
+
+
 
 
 

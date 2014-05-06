@@ -13,6 +13,8 @@ dbevent.controller('homeCtrl',function homeCtrl($scope, $rootScope, topLevel, so
             })
     }
 
+
+
     $http.post('/getnoti',"")
         .success(function(data){
             if(data!="false"){
@@ -34,7 +36,7 @@ dbevent.controller('homeCtrl',function homeCtrl($scope, $rootScope, topLevel, so
             console.log("ERROR");
         })
 
-        var DropCount = 1;
+
 
     $("#noti").on("click", function () {
         ShowCrystalNotificationPanel();
@@ -48,8 +50,17 @@ dbevent.controller('homeCtrl',function homeCtrl($scope, $rootScope, topLevel, so
             content: data.text,
             panelbutton: true,
             timeout: 3500
+        },function (b) {
+
+            console.log("You just got a live noti");
+
         });
+        window.stop();
     })
 
-    $(".testmeout").click(function(){console.log("hello buddy");});
+    $rootScope.rab = function(){
+        console.log("inside RAB");
+    }
+
+
 })
